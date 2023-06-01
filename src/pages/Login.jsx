@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import "./Login.css";
 const Login = ({ history }) => {
   //   const history = useHistory();
 
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setmsg] = useState("");
@@ -61,7 +60,12 @@ const Login = ({ history }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Login</button>
+        <div>
+          <button type="submit">Login</button>
+          <Link className="btn" to="/register">
+            Register
+          </Link>
+        </div>
       </form>
 
       <h3>{msg ? msg : ""}</h3>

@@ -8,12 +8,18 @@ const TodoHome = () => {
   //   const searchParams = new URLSearchParams(location.search);
 
   const userId = sessionStorage.getItem("userId");
-  console.log(userId);
+  // console.log(userId);
 
   const [currstate, setcurrstate] = useState(false);
+  const [updatestate, setupdatestate] = useState(false);
   const [title, setTitle] = useState("");
+  const [isupdating, setisupdating] = useState(false);
   const [description, setDescription] = useState("");
   const [todos, setTodos] = useState([]);
+  const [updatedTitle, setUpdatedTitle] = useState("");
+  const [updatedDescription, setUpdatedDescription] = useState("");
+
+  const [idholder, setIdholder] = useState("");
 
   const handleDelete = async (id) => {
     // Filter out the todo item with the provided id
@@ -49,7 +55,46 @@ const TodoHome = () => {
       }
     };
     fetchTodos();
-  }, [userId, currstate]);
+  }, [userId, currstate, updatestate]);
+
+  const handleEdit = async (e) => {
+    setisupdating(() => setisupdating(!isupdating));
+    const id = e;
+    setIdholder(id);
+    // console.log(id);
+
+    try {
+      const res = await axios.get(`http://localhost:5000/api/todo/${id}`);
+      // console.log(res.data.title);
+      setTitle(res.data.title);
+      setDescription(res.data.description);
+      setisupdating(() => setisupdating(!isupdating));
+    } catch (err) {
+      console.log("error :  " + err.message);
+    }
+  };
+  const handleupdate = async (e) => {
+    e.preventDefault();
+    // console.log(idholder);
+
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/todos/${idholder}`,
+        {
+          title: title,
+          description: description,
+        }
+      );
+
+      // console.log(response);
+      setupdatestate(() => setupdatestate(!updatestate));
+      setisupdating(() => setisupdating(!isupdating));
+      setTitle("");
+      setDescription("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   //   const [description, setDescription] = useState("");
   const handleSubmit = async (e) => {
@@ -103,7 +148,13 @@ const TodoHome = () => {
             />
           </div>
 
-          <button type="submit">Add Todo</button>
+          {!isupdating ? (
+            <button type="submit">Add Todo</button>
+          ) : (
+            <button type="button" onClick={(e) => handleupdate(e)}>
+              Update Todo
+            </button>
+          )}
         </form>
       </div>
 
@@ -120,8 +171,11 @@ const TodoHome = () => {
               <li className="list" key={todo._id}>
                 <h3>{todo.title}</h3>
                 <p>Completed: {todo.description}</p>
+                <div onClick={() => handleEdit(todo._id)}>
+                  <i className="fa-solid fa-pen-to-square"></i>
+                </div>
                 <div onClick={() => handleDelete(todo._id)}>
-                  <i class="fa-sharp fa-solid fa-trash"></i>
+                  <i className="fa-sharp fa-solid fa-trash"></i>
                 </div>
               </li>
             ))}

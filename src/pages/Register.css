@@ -43,6 +43,14 @@ button {
   border-radius: 4px;
   cursor: pointer;
 }
+.btn {
+  /* background-color: #4caf50; */
+  /* color: white !important; */
+  /* border: none; */
+  /* border-radius: 4px; */
+  cursor: pointer;
+  padding-left: 10px;
+}
 
 button:hover {
   background-color: #45a049;
@@ -57,4 +65,12 @@ h3 {
   text-align: center;
   color: red;
   margin-top: 10px;
+}
+.homepage a {
+  /* border: 1px solid black; */
+  color: whitesmoke;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #4caf50;
 }

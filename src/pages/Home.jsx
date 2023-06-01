@@ -5,12 +5,8 @@ import "./Register.css";
 const Home = () => {
   return (
     <div className="homepage">
-      <button>
-        <Link to="/login">Login</Link>
-      </button>
-      <button>
-        <Link to="/register">Register</Link>
-      </button>
+      <Link to="/login">Login</Link>
+      <Link to="/register">Register</Link>
     </div>
   );
 };

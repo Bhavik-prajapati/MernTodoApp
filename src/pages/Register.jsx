@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Register.css";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Register = ({ history }) => {
   const [name, setName] = useState("");
@@ -67,7 +68,12 @@ const Register = ({ history }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Register</button>
+        <div>
+          <button type="submit">Register</button>
+          <Link className="btn" to="/login">
+            Login
+          </Link>
+        </div>
       </form>
 
       <h3>{msg ? msg : ""}</h3>
